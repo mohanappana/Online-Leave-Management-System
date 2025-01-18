@@ -1,9 +1,12 @@
 package com.mohan.OLMS.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.Date;
+
+@Data
 @Entity
-@Table(name = "Leaves Table")
 public class LeaveEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,17 +14,22 @@ public class LeaveEntity {
     private Long leaveId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student", referencedColumnName = "StudentId",nullable = false)
+    @JoinColumn(name = "student", referencedColumnName = "StudentId")
     private StudentEntity student;
 
-    @Column(name = "leave_reason",nullable = false)
+    @Column(name = "leave_reason")
     private String leaveReason;
 
-    @Column(name = "leave_status", nullable = false)
+    @Column(name = "leave_status")
     private String leaveStatus;
 
-    @Column(nullable = false)
-    private String status = "Pending";
+    @Column(name = "from_Date")
+    private Date fromDate;
+
+    @Column(name = "to_Date")
+    private Date ToDate;
+
+
 
 
 

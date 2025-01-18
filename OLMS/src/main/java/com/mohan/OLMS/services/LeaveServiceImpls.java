@@ -5,6 +5,8 @@ import com.mohan.OLMS.repository.LeaveRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LeaveServiceImpls implements LeaveService{
 
@@ -16,9 +18,17 @@ public class LeaveServiceImpls implements LeaveService{
 
     @Override
     public boolean applyForLeave(LeaveEntity leaveEntity) {
-        if(true)
+        if(leaveEntity != null) {
+            leaveRepository.save(leaveEntity);
             return true;
-        else
+
+        }else{
             return false;
+        }
+    }
+
+    @Override
+    public List<LeaveEntity> getLeaveDetailsById(String studentId) {
+        return leaveRepository.findByStudentId(studentId);
     }
 }
