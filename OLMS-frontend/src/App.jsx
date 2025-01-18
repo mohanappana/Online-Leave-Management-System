@@ -24,6 +24,7 @@ import Unauthorized from './components/Unauthorized'
 import LeaveComponent from './components/LeaveComponent'
 import StudentDashboard from './components/StudentDashboard'
 import GraphToggle from './components/GraphToggle'
+import ApplicationsTable from './components/ApplicationsTable'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -50,7 +51,28 @@ function App() {
                   <StudentPage/>
                 </PrivateRouter>
               } 
-            ></Route>
+              />
+              <Route path="/studentDashboard/applyLeave"
+                element={
+                  <PrivateRouter role="STUDENT">
+                    <LeaveComponent/>
+                  </PrivateRouter>
+                } 
+              />
+              <Route path="/studentDashboard/applications"
+                element={
+                  <PrivateRouter role="STUDENT">
+                    <StudentApplicationStatus/>
+                  </PrivateRouter>
+                } 
+              />
+              <Route path="/studentDashboard/details"
+                element={
+                  <PrivateRouter role="STUDENT">
+                    <TeacherLeavePanel/>
+                  </PrivateRouter>
+                } 
+              />
             <Route path='/hodDashboard' 
               element={
                 <PrivateRouter role="HOD">

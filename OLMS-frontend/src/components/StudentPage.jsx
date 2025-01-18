@@ -23,6 +23,9 @@ const StudentPage = () => {
     }
     fecthStudentDetails();
   },[user])
+  const handleNavigation = (route) => {
+    navigate(route);
+  }
   return (
     <div className='grid grid-flow-row mb-20'>
         <div className='bg-gradient-to-r from-studentleft via-studentcenter to-studentright flex flex-row relative min-h-80'>
@@ -44,7 +47,7 @@ const StudentPage = () => {
               <img className='w-24 h-auto mt-6' src={accept} alt="study" />
             </div>
             <div className='text-center mt-10 mb-1'>
-              <button className='border-2 bg-byellow text-white border-black text-xl px-10 py-2 mb-4' onClick={() => navigate("/applyLeave")}>Apply</button>
+              <button className='border-2 bg-byellow text-white border-black text-xl px-10 py-2 mb-4' onClick={() => handleNavigation("/studentDashboard/applyLeave")}>Apply</button>
             </div> 
           </div>
           <div className='bg-lightgray w-60 rounded-3xl overflow-hidden shadow-lg mt-4 px-8'>
@@ -52,7 +55,7 @@ const StudentPage = () => {
               <img className='w-24 h-auto mt-6' src={app} alt="study" />
             </div>
             <div className='text-center mt-10 mb-1'>
-              <button className='border-2 bg-byellow text-white border-black text-xl px-4 py-2 mb-4'>Applications</button>
+              <button className='border-2 bg-byellow text-white border-black text-xl px-4 py-2 mb-4' onClick={() => handleNavigation("/studentDashboard/applications")}>Applications</button>
             </div> 
           </div>
           <div className='bg-lightgray w-60 rounded-3xl overflow-hidden shadow-lg mt-4 px-8'>
@@ -60,7 +63,7 @@ const StudentPage = () => {
               <img className='w-24 h-auto mt-6' src={data} alt="study" /> 
             </div>
             <div className='text-center mt-10 mb-1'>
-              <button className='border-2 border-black  text-xl px-2 py-2 mb-4'>View Dashboard</button>
+              <button className='border-2 border-black  text-xl px-2 py-2 mb-4' onClick={() => handleNavigation("/studentDashboard/details")}>View Dashboard</button>
             </div> 
           </div>
         </div>
