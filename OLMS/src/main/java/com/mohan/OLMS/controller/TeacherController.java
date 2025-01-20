@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.status;
 
-@CrossOrigin(origins = "http://localhost:5173")
+
 @RestController
 @RequestMapping("/api/teacher")
 public class TeacherController {
@@ -51,11 +51,11 @@ public class TeacherController {
     public List<TeacherDTO> getAllTeachers(){
         return teacherService.getAllTeachers()
                 .stream()
-                .map(teac -> new TeacherDTO(
-                        teac.getTeacherId(),
-                        teac.getTeacherName(),
-                        teac.getTeacherEmail(),
-                        teac.getTeacherPhone()))
+                .map(teach -> new TeacherDTO(
+                        teach.getTeacherId(),
+                        teach.getTeacherName(),
+                        teach.getTeacherEmail(),
+                        teach.getTeacherPhone()))
                 .collect(Collectors.toList());
     }
 
@@ -68,9 +68,9 @@ public class TeacherController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @PutMapping("/teacher/{studentId}")
-    public ResponseEntity<String> updateTeacher(@PathVariable String studentId,@RequestBody Teacher updateTeacher){
-        boolean isTeacherUpdated = teacherService.updateTeacher(studentId,updateTeacher);
+    @PutMapping("/teacher/{teacherId}")
+    public ResponseEntity<String> updateTeacher(@PathVariable String teacherId,@RequestBody Teacher updateTeacher){
+        boolean isTeacherUpdated = teacherService.updateTeacher(teacherId,updateTeacher);
         if(isTeacherUpdated){
             return new ResponseEntity<>("Teacher data updated",HttpStatus.OK);
         }

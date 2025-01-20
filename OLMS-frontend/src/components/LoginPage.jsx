@@ -34,6 +34,9 @@ const LoginPage = ({ isOpen, onRequestClose }) => {
   
       setRole(role);
       setUser(username);
+      
+      console.log("Updated Role:", role);  // Check if the role is set
+      console.log("Updated User:", username); // Check if the user is set
   
       if (values.rememberme) {
         localStorage.setItem("jwtToken", token);
