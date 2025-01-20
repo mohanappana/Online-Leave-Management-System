@@ -10,19 +10,38 @@ import { useNavigate } from 'react-router-dom'
 
 const StudentPage = () => {
   const [userDetails, setUserDetails] = useState();
-  const user = useRecoilValue(userState)
+  const studentId = useRecoilValue(userState)
   const navigate = useNavigate();
+  console.log(userState);
+  // useEffect(() => {
+  //   const fecthStudentDetails = async () => {
+  //     try {
+  //       const response = await axiosInstance.get(`student/student/${user.studentId}`)
+  //       setUserDetails(response.data);
+  //     } catch (error) {
+  //       console.log("Student details not found",error)
+  //     }
+  //   }
+  //   fecthStudentDetails();
+  // },[user])
+
   useEffect(() => {
-    const fecthStudentDetails = async () => {
-      try {
-        const response = await axiosInstance.get(`student/${user.studentId}`)
-        setUserDetails(response.data);
-      } catch (error) {
-        console.log("Student details not found",error)
-      }
+    if (studentId) {
+      // Now you can use studentId for API calls or other logic
+      console.log('Logged-in student ID:', studentId);
+      
+      // Example: Fetch data based on studentId
+      axios.get(`http://localhost:8080/api/student/student/${studentId}`)
+        .then(response => {
+          console.log(response.data);  // handle the response
+        })
+        .catch(error => {
+          console.error('Error fetching student data:', error);
+        });
     }
-    fecthStudentDetails();
-  },[user])
+  }, [studentId]);
+
+
   const handleNavigation = (route) => {
     navigate(route);
   }
