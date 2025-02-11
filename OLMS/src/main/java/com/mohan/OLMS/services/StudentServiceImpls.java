@@ -1,9 +1,11 @@
 package com.mohan.OLMS.services;
 
 import com.mohan.OLMS.Dto.StudentDTO;
+import com.mohan.OLMS.entity.RoleEntity;
 import com.mohan.OLMS.entity.StudentEntity;
 import com.mohan.OLMS.entity.TeacherEntity;
 import com.mohan.OLMS.model.Student;
+import com.mohan.OLMS.repository.RoleRepository;
 import com.mohan.OLMS.repository.StudentRepository;
 import com.mohan.OLMS.security.jwt.JwtUtils;
 import org.springframework.beans.BeanUtils;
@@ -23,7 +25,11 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpls implements StudentService{
 
+    @Autowired
     private final StudentRepository studentRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private JwtUtils jwtService;
@@ -42,12 +48,15 @@ public class StudentServiceImpls implements StudentService{
     public boolean addStudent(Student student) {
         if(student != null && student.getStudentId() != null){
             StudentEntity studentEntity = new StudentEntity();
-            student.setStudentEmail(student.getStudentId()+"@rguktn.ac.in");
+//            student.setStudentEmail(student.getStudentId()+"@rguktn.ac.in");
             String Pwd_first = student.getStudentId();
             String Pwd_Second = student.getStudentName();
-
             student.setStudentPassword(bCryptPasswordEncoder.encode((Pwd_first.substring(3)+"@"+Pwd_Second.substring(0,3))));
+            RoleEntity roleEntity = roleRepository.findById(1L)
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+            studentEntity.setRole(roleEntity);
             BeanUtils.copyProperties(student,studentEntity);
+
             studentRepository.save(studentEntity);
             return true;
 
@@ -68,7 +77,7 @@ public class StudentServiceImpls implements StudentService{
                         stu.getStudentEmail(),
                         stu.getStudentPhone(),
                         null,
-                        null,null))
+                        stu.getStudentAddedBy(),null))
                 .collect(Collectors.toList());
 
         return students;

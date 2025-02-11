@@ -3,11 +3,18 @@ import { useRecoilValue } from 'recoil';
 import { roleState } from './atom';
 import { Navigate } from 'react-router-dom';
 
-const PrivateRouter = ({role,children}) => {
+const PrivateRouter = ({roles,children}) => {
   const currentRole = useRecoilValue(roleState);
 
-  if(currentRole != role){
-    return <Navigate to="/unauthorized" replace/>
+  const token = localStorage.getItem("jwtToken") || sessionStorage.getItem("jwtToken");
+  
+
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+
+  if (roles && !roles.includes(currentRole)) {
+    return <Navigate to="/unauthorized" />;
   }
   return children;
 }

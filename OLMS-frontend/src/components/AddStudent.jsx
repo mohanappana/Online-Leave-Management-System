@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import study from '../assets/hodpage/study.png'
 import FormikControl from './FormikControl'
 import { Formik,Form } from 'formik'
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { userState } from './atom';
+import axiosInstance from './axiosInstance';
 
 const AddStudent = () => {
+  const [email,setEmail] = useState("");
+  const teacherId = useRecoilValue(userState);
     const onSubmit = async (values) =>{
         try{
-          const response = await axios.post("http://localhost:8080/api/teacher",values)
+          const response = await axiosInstance.post("http://localhost:8080/api/student/student",values)
           return response.data
         }catch(error){
           console.error("e",error)
@@ -27,50 +32,69 @@ const AddStudent = () => {
       <Formik 
       initialValues={
         {
-            teacherId:"",
-            teacherName:"",
-            teacherPhone:"",
-            teacherEmail:"",
+            studentId:"",
+            studentName:"",
+            studentPhone:"",
+            studentEmail:"",
+            studentAddedBy:teacherId,
+            
         }
       }
       validationSchema={
         Yup.object({
-            teacherId:Yup.string()
-                .required("Teacher Id is Required")
+            studentId:Yup.string()
+                .required("Student Id is Required")
                 .length(7, "Must be exactly 7 characters"),
-            teacherName:Yup.string()
-                .min(5,"Teacher Name atleast 5 characters")
-                .max(15,"Teacher Name atmost 5 characters")
-                .required("Teacher Name is Required"),
-            teacherPhone:Yup.string().required("Teacher phone number is required"),
-            teacherEmail:Yup.string().required("Teacher mail id")
+            studentName:Yup.string()
+                .min(3,"Student Name atleast 3 characters")
+                .max(15,"Student Name atmost 5 characters")
+                .required("Student Name is Required"),
+            studentPhone:Yup.string().required("Student phone number is required"),
+            studentEmail:Yup.string().email().required("Student mail id"),
+
         })
       }
       onSubmit={onSubmit}>
-        <div className='relative'>
+        <div className='flex  justify-center relative'>
             
 
-            <div className='w-full px-64 py-20'>
+            <div className='min-w-xl px-28 py-20'>
               <Form className='bg-inputback shadow-md rounded-3xl px-8 pt-6 pb-8 mb-4  relative'>
-                <div className='flex justify-around'>
-                  <FormikControl control="input" name="teacherId" classNam="w-52 bg-login placeholder-black " type="text" placeholder="Student ID" fieldcls="bg-login" />
-                  <FormikControl control="input" name="teacherName" classNam="w-52 bg-login placeholder-black" type="text" placeholder="Teacher Name" fieldcls="bg-login"/>
-                  <FormikControl control="input" name="teacherPhone" classNam="w-52 bg-login placeholder-black" type="text" placeholder="Teacher Phone Number" fieldcls="bg-login"/> 
+                <div className='grid grid-flow-row  auto-rows-auto'>
+                  <FormikControl control="textfield" label="Student Id" name="studentId" classNam="w-52 bg-login placeholder-black " type="text" placeholder="Student ID" fieldcls="bg-login" />
+                  <FormikControl control="textfield" label="Student First Name" name="studentName" classNam="w-52 bg-login placeholder-black" type="text" placeholder="Student Name" fieldcls="bg-login"/>
+                  {/* <FormikControl control="textfield" label="Student Second Name" name="studentPhone" classNam="w-52 bg-login placeholder-black" type="text" placeholder="Student Phone Number" fieldcls="bg-login"/>  */}
 
-                </div>
-                <div className='flex justify-evenly mt-4 mb-4'>
-                  <FormikControl control="input" name="teacherEmail" classNam="w-52  border-black bg-login placeholder-black" type="text" placeholder="Teacher Mail ID" fieldcls="bg-login"/> 
-                  <FormikControl control="input" name="teacherEmail" classNam="w-52 bg-login placeholder-black" type="text" placeholder="Teacher Mail ID" fieldcls="bg-login"/> 
+                {/* </div> */}
+                {/* <div className='flex justify-evenly mt-4 mb-4'> */}
+                  <FormikControl control="textfield" label="Student Email" name="studentEmail" classNam="w-52  border-black bg-login placeholder-black" type="text" placeholder="Student Mail ID" fieldcls="bg-login"/> 
+                  <FormikControl control="textfield" label="Student Phone" name="studentPhone" classNam="w-52 bg-login placeholder-black" type="text" placeholder="Student Mail ID" fieldcls="bg-login"/> 
+                  
 
-                </div>
-                  <div className='absolute bottom-5 left-4 flex gap-3'>
-                  <FormikControl control="checkbox" classNam="text-xl" />
-                  <p>I confirm adding this wirth my consent</p>             
+                {/* </div> */}
+                  {/* <div className='absolute bottom-5 left-4 flex gap-3'> */}
+                  <div className='relative'>
+                    <div className='mb-7' >
+                    <FormikControl
+                      control="checkbox"
+                      name="agreeTerms"
+                      label="I confirm adding this with my consent"
+                      classNam="text-xl text-clip"
+                    />              
+                      
+                    </div>
+                    <div className=' absolute -bottom-5 right-0'>
+                      <div className=''>
+
+                      <button type="submit" className='bg-green-500 border-b border rounded-md  text-white px-3 py-1 '>
+                          Submit
+                      </button>
+                      </div>
+                    </div>
                     
                   </div>
-                  <button type="submit" className='bg-green-500 border-b border rounded-md absolute bottom-4 right-10 text-white px-3 py-1 '>
-                      Submit
-                  </button>
+                  
+                </div>
               </Form>
           </div>
         </div>

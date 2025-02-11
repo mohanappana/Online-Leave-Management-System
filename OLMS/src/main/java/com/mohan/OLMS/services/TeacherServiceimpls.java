@@ -1,9 +1,13 @@
 package com.mohan.OLMS.services;
 
+import com.mohan.OLMS.entity.RoleEntity;
 import com.mohan.OLMS.entity.TeacherEntity;
 import com.mohan.OLMS.model.Teacher;
+import com.mohan.OLMS.repository.RoleRepository;
 import com.mohan.OLMS.repository.TeacherRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +19,23 @@ import java.util.stream.Collectors;
 public class TeacherServiceimpls implements TeacherService{
     private final TeacherRepository teacherRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     public TeacherServiceimpls(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     @Override
     public boolean addTeacher(Teacher teacher) {
         if( teacher != null && teacher.getTeacherId() != null){
             TeacherEntity teacherEntity = new TeacherEntity();
-
-            String TPwd_second = teacher.getTeacherName();
-            teacher.setTeacherEmail(teacher.getTeacherId()+"@rguktn.ac.in");
-            teacher.setTeacherPassword(teacher.getTeacherId()+"$"+teacher.getTeacherName().substring(0,4));
+            teacher.setTeacherPassword(bCryptPasswordEncoder.encode(teacher.getTeacherId().substring(3)+"$"+teacher.getTeacherName().substring(0,4)));
+            RoleEntity roleEntity = roleRepository.findById(2L)
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+            teacherEntity.setRole(roleEntity);
             BeanUtils.copyProperties(teacher,teacherEntity); 
             teacherRepository.save(teacherEntity);
             return true;

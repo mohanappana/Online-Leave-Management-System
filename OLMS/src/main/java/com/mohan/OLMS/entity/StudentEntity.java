@@ -1,13 +1,20 @@
 package com.mohan.OLMS.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class StudentEntity {
     @Id
     @Column(name = "StudentId")
@@ -28,5 +35,6 @@ public class StudentEntity {
     private RoleEntity role;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<LeaveEntity> leaves;
 }

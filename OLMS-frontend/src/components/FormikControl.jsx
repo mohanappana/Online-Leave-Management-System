@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TextField } from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 
 const datePickerTheme = createTheme({
   components: {
@@ -15,7 +15,7 @@ const datePickerTheme = createTheme({
           },
           "& .MuiOutlinedInput-root": {
             backgroundColor: "#b4d0ff", // Light background
-            borderRadius: "8px", // Rounded corners
+            borderRadius: "24px", // Rounded corners
             "& fieldset": {
               borderColor: "#1976d2", // Default border color
             },
@@ -44,6 +44,7 @@ const datePickerTheme = createTheme({
     },
   },
 });
+
 
 const FormikControl = ({
   control,
@@ -126,41 +127,78 @@ const FormikControl = ({
             className="text-red-600 text-sm mt-1"
           />
         </div>
-      );
-
-      case 'date':
-  return (
-    <ThemeProvider theme={datePickerTheme}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Field name={name}>
-          {({ field, form }) => (
-            <DatePicker
-              {...rest}
-              value={field.value || null}
-              onChange={(newValue) => form.setFieldValue(name, newValue)}
-              renderInput={(params) => (
+    );
+    case 'date':
+      return (
+      <ThemeProvider theme={datePickerTheme}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Field name={name}>
+            {({ field, form }) => (
+              <DatePicker
+                {...rest}
+                value={field.value || null}
+                format="DD/MM/YYYY"
+                minDate={rest.minDate}
+                onChange={(newValue) => form.setFieldValue(name, newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    error={Boolean(form.errors[name] && form.touched[name])}
+                    helperText={
+                      form.errors[name] && form.touched[name] ? form.errors[name] : null
+                    }
+                  />
+                )}
+              />
+            )}
+          </Field>
+        </LocalizationProvider>
+      </ThemeProvider>
+    );  
+    default:
+      return null;
+  
+    case'textfield' :
+    return(
+      <ThemeProvider theme={datePickerTheme}>
+          <Box
+            sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+          >
+            <Field name={name}>
+              {({ field, form }) => (
                 <TextField
-                  {...params}
-                  fullWidth
+                  {...field}
+                  {...rest}
+                  id={name}
+                  label={rest.label}
+                  value={field.value}
+                  variant="outlined"
+                  autoComplete="off"
                   error={Boolean(form.errors[name] && form.touched[name])}
                   helperText={
-                    form.errors[name] && form.touched[name] ? form.errors[name] : null
+                    form.errors[name] && form.touched[name]
+                      ? form.errors[name]
+                      : null
                   }
                 />
               )}
-            />
-          )}
-        </Field>
-      </LocalizationProvider>
-    </ThemeProvider>
-  );
+              
+            </Field>
+          </Box>
+        </ThemeProvider>
+    );
+    case 'multiline':
+      return(
+        <Box>
+          <TextField
 
-      
-      
-
-    default:
-      return null;
+          multiline
+          />
+        </Box>
+      );
   }
+  
 };
 
 export default FormikControl;
