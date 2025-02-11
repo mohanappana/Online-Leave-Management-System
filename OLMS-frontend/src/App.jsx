@@ -25,9 +25,13 @@ import LeaveComponent from './components/LeaveComponent'
 import StudentDashboard from './components/StudentDashboard'
 import GraphToggle from './components/GraphToggle'
 import ApplicationsTable from './components/ApplicationsTable'
+import DoughnutChart from './components/DoughnutChart'
+import StudentDashboardCards from './components/StudentDashboardCards'
+import TeacherDashboardCards from './components/TeacherDashboardCards'
+import HodDashboardcards from './components/HodDashboardcards'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
     <>
@@ -37,11 +41,32 @@ function App() {
           <Routes>
             {/* Define your routes here */}
             <Route path="/" element={<Hom/>} />
-            <Route path='/leave' element={<GraphToggle/>}></Route>
+            <Route path='/leave' element={<HodDashboardcards/>}></Route>
             <Route path="/teacherDashboard" 
               element={
                 <PrivateRouter role="TEACHER" >
                   <Teacherpage/>
+                </PrivateRouter>
+              } 
+            />
+            <Route path="/teacherDashboard/addStudent" 
+              element={
+                <PrivateRouter role="TEACHER" >
+                  <AddStudent/>
+                </PrivateRouter>
+              } 
+            />
+            <Route path="/teacherDashboard/leavePanel" 
+              element={
+                <PrivateRouter role="TEACHER" >
+                  <TeacherLeavePanel/>
+                </PrivateRouter>
+              } 
+            />
+            <Route path="/teacherDashboard/viewDashboard" 
+              element={
+                <PrivateRouter role="TEACHER" >
+                  <TeacherDashboardCards/>
                 </PrivateRouter>
               } 
             />
@@ -69,7 +94,7 @@ function App() {
               <Route path="/studentDashboard/details"
                 element={
                   <PrivateRouter role="STUDENT">
-                    <TeacherLeavePanel/>
+                    <GraphToggle/>
                   </PrivateRouter>
                 } 
               />
@@ -96,12 +121,28 @@ function App() {
                 </PrivateRouter>
               }
             />
+            <Route
+              path="/hodDashboard/applications"
+              element={
+                <PrivateRouter role="HOD">
+                  <TeacherLeavePanel />
+                </PrivateRouter>
+              }
+            />
+            <Route
+              path="/hodDashboard/viewDashboard"
+              element={
+                <PrivateRouter role="HOD">
+                  <HodDashboardcards />
+                </PrivateRouter>
+              }
+            />
 
             <Route path='/unauthorized' element={<Unauthorized/>}/>
 
                 
           </Routes>
-        <Footer/>
+        {/* <Footer/> */}
     
 
       </BrowserRouter>

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.status;
 
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/teacher")
 public class TeacherController {

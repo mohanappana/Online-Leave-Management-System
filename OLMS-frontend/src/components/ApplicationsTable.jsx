@@ -45,7 +45,7 @@ const ApplicationsTable = ({headers = [], applicationDetails = [] }) => {
         <tbody className="bg-tbody text-center text-xl p-3">
             {(Object.keys(applicationDetails[0]).length === 5) ?
           applications.map((app) => (
-            <tr key={app.id}>
+            <tr key={app.leaveId}>
               <td>{app.id}</td>
               <td>{app.fromDate}</td>
               <td>{app.toDate}</td>

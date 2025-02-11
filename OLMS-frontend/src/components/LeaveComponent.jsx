@@ -3,22 +3,44 @@ import FormikControl from './FormikControl';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import axiosInstance from './axiosInstance';
+import { useRecoilValue } from 'recoil';
+import { userState } from './atom';
 
 const LeaveComponent = () => {
+  const studentId = useRecoilValue(userState)
   const onSubmit = async (values, { setSubmitting, setFieldError }) => {
+    const { agreeTerms, ...submitValues } = values;
+    const formattedValues = {
+      ...submitValues,
+      fromDate: values.fromDate ? values.fromDate.format('DD-MM-YYYY') : null,
+      toDate: values.toDate ? values.toDate.format('DD-MM-YYYY') : null,
+      
+    };
+    console.log(formattedValues,'hello');
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/studentLeaves',
-        values
-      );
+      const response = await axiosInstance.post('/leave/applyLeave', formattedValues);
+      alert('Leave applied successfully!',formattedValues);
       console.log('Response:', response.data);
+      //console.log('Response:', response.data);
     } catch (error) {
       console.error('Error:', error);
       setFieldError('apiError', 'Failed to submit the leave. Please try again.');
     } finally {
+      //console.log(formattedValues);
+      ;
       setSubmitting(false);
     }
   };
+  const validateTodate = (values) =>{
+    let error;
+    
+    if(values.fromDate <= values.toDate){
+      console.log("from date")
+    }else{
+      throw "it is not in good format";
+    }
+  }
 
   return (
     <div>
@@ -35,17 +57,20 @@ const LeaveComponent = () => {
           initialValues={{
             fromDate: null,
             toDate: null,
-            reason: '',
+            leaveReason: '',
             agreeTerms: false,
+            student: {
+              studentId: studentId
+            },
           }}
           validationSchema={Yup.object({
             fromDate: Yup.date()
               .required('From Date is Required')
-              .nullable(),
+              .nonNullable(),
             toDate: Yup.date()
               .required('To Date is Required')
-              .nullable(),
-            reason: Yup.string().required('Reason is Required'),
+              .nonNullable(),
+            leaveReason: Yup.string().required('Reason is Required'),
             agreeTerms: Yup.bool().oneOf(
               [true],
               'You must confirm your consent to proceed'
@@ -53,12 +78,12 @@ const LeaveComponent = () => {
           })}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting, errors }) => (
+          {({ isSubmitting, errors, values }) => (
             <div className="relative">
               <div className="w-full px-16 py-20">
                 <Form className="bg-inputback shadow-md rounded-3xl px-8 pt-6 pb-8 mb-4 relative">
                   <div className='flex flex-row'>
-                    <div className="mt-6 mb-4 basis-1/4">
+                    <div className="mt-7 mb-5 basis-1/4">
                       <div className='grid grid-rows-2 gap-4'>
                         <FormikControl
                           control="date"
@@ -70,14 +95,15 @@ const LeaveComponent = () => {
                           control="date"
                           name="toDate"
                           label="To Date"
+                          minDate={values.fromDate}
                           classNam="w-52 bg-login placeholder-black"
                         />
                       </div>
                     </div>
-                    <div className=" basis-3/4 my-4 mx-10">
+                    <div className=" basis-3/4 mx-10">
                       <FormikControl
                         control="textarea"
-                        name="reason"
+                        name="leaveReason"
                         label="Reason for Leave"
                         placeholder="Enter the reason for your leave"
                         classNam="w-full border-black bg-login placeholder-black"

@@ -1,8 +1,10 @@
 package com.mohan.OLMS.Dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -22,9 +24,9 @@ public class LeaveDTO {
 
     private String leaveStatus;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate fromDate;
 
-    private Date fromDate;
-
-
-    private Date ToDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate ToDate;
 }

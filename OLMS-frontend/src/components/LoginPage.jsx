@@ -17,6 +17,7 @@ Modal.setAppElement("#root");
 const LoginPage = ({ isOpen, onRequestClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [role,setRole ] = useRecoilState(roleState);
+  
  
   const [user,setUser] = useRecoilState(userState);
   console.log("Current user:", user);
@@ -28,21 +29,26 @@ const LoginPage = ({ isOpen, onRequestClose }) => {
         username: values.studentId,
         password: values.studentPassword,
       });
+      console.log("Login Response:", response.data)
   
-      const { username, token, roles } = response.data;
-      const role = roles.replace("ROLE_", "");
-  
+      const { username, jwtToken, roles } = response.data;
+      const role = roles.replace("ROLE_","")
+      const token = jwtToken;
+      //console.log("Token from backend",token);
       setRole(role);
       setUser(username);
-      
-      console.log("Updated Role:", role);  // Check if the role is set
-      console.log("Updated User:", username); // Check if the user is set
+      console.log(role,"hello");
+      //console.log("Updated Role:", response.data);  // Check if the role is set
+      //console.log("Updated val",values); // Check if the user is set
   
       if (values.rememberme) {
         localStorage.setItem("jwtToken", token);
+        localStorage.setItem("userId",username)
       } else {
         sessionStorage.setItem("jwtToken", token);
+        sessionStorage.setItem("userId",username)
       }
+      console.log("Stored JWT Token:", sessionStorage.getItem("jwtToken"));
   
       if (onRequestClose) {
         onRequestClose(); 
@@ -133,7 +139,7 @@ const LoginPage = ({ isOpen, onRequestClose }) => {
                         rightIcon={<button
                             type="button"
                             onClick={() => setShowPassword((prev) => !prev)} 
-                            className={`absolute inset-y-0 top-2 right-2 flex items-center text-gray-500`}
+                            className={`absolute inset-y-0 right-2 flex items-center text-gray-500`}
                         >
                             {showPassword ? <FaEyeSlash /> : <FaEye />} 
                         </button>}
@@ -157,7 +163,7 @@ const LoginPage = ({ isOpen, onRequestClose }) => {
                         <div className="text-center">
                         <button type="button"
                         className="text-black hover:underline">
-                            Forgotten password?
+                            Forgot password?
                         </button>
                         </div>
                     </Form>

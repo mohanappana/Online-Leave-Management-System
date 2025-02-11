@@ -7,39 +7,61 @@ import { useRecoilValue } from 'recoil'
 import { userState } from './atom'
 import axiosInstance from './axiosInstance'
 import { useNavigate } from 'react-router-dom'
+import StudentDashboard from './StudentDashboard'
 
 const StudentPage = () => {
   const [userDetails, setUserDetails] = useState();
   const studentId = useRecoilValue(userState)
   const navigate = useNavigate();
-  console.log(userState);
-  // useEffect(() => {
-  //   const fecthStudentDetails = async () => {
-  //     try {
-  //       const response = await axiosInstance.get(`student/student/${user.studentId}`)
-  //       setUserDetails(response.data);
-  //     } catch (error) {
-  //       console.log("Student details not found",error)
-  //     }
-  //   }
-  //   fecthStudentDetails();
-  // },[user])
-
+  console.log(studentId,"kkk");
   useEffect(() => {
-    if (studentId) {
-      // Now you can use studentId for API calls or other logic
-      console.log('Logged-in student ID:', studentId);
+    const fecthStudentDetails = async () => {
+      try {
+        const response = await axiosInstance.get(`api/student/student/${studentId}`)
+        setUserDetails(response.data);
+        
+      } catch (error) {
+        console.log("Student details not found",error)
+      }
+    }
+    fecthStudentDetails();
+  },[studentId])
+
+  console.log(userDetails)
+  
+  const token = sessionStorage.getItem("jwtToken") ;
+  //console.log(token)
+  // useEffect(() => {
+  //   if (studentId) {
+  //     // Now you can use studentId for API calls or other logic
+  //     console.log('Logged-in leave ID:', studentId);
+
+  //     axios.get("http://localhost:8080/auth/login")
+  //       .then(response => {
+  //         console.log(response)
+  //       })
+
+  //     axios.get(`http://localhost:8080/student/student/${studentId}`, {
+  //       headers: { Authorization:  `Bearer ${token}` },
+  //     })
+  //     // axios.get(`http://localhost:8080/leave/student/${studentId}`)
+  //       .then(response => {
+  //         console.log(response.data);  // handle the response
+  //       })
+  //       .catch(error => {
+  //         console.error('Error fetching student data:', error);
+  //       });
       
       // Example: Fetch data based on studentId
-      axios.get(`http://localhost:8080/api/student/student/${studentId}`)
-        .then(response => {
-          console.log(response.data);  // handle the response
-        })
-        .catch(error => {
-          console.error('Error fetching student data:', error);
-        });
-    }
-  }, [studentId]);
+    //   axios.get(`http://localhost:8080/api/student/student/${studentId}`)
+    //     .then(response => {
+    //       console.log(response.data);  // handle the response
+    //     })
+    //     .catch(error => {
+    //       console.error('Error fetching student data:', error);
+    //     });
+  //   }
+  // }, [studentId]);
 
 
   const handleNavigation = (route) => {
@@ -50,11 +72,14 @@ const StudentPage = () => {
         <div className='bg-gradient-to-r from-studentleft via-studentcenter to-studentright flex flex-row relative min-h-80'>
             <div className="absolute top-20 left-20 text-3xl basis-1/2 ">
             <p className="font-bold">Hi</p>
-            <p className="font-bold text-5xl mt-6 mb-6">{`Hello, ${userDetails?.name || 'Student'}!`}</p>
+            <p className="font-bold text-5xl mt-6 mb-6">{`Hello, ${studentId.toUpperCase() || 'Student'}!`}</p>
             Student studies
             </div>
             <div className="absolute top-20 right-44 basis-1/2">
-            <p className="text-xl">Available leaves</p>
+              <p className="text-xl text-center">Available leaves</p>
+              <div>
+                <StudentDashboard color={'FFBF00'} width={'w-[192px]'}/>
+              </div>
             </div>
         </div>
         <div className='mt-14 '>

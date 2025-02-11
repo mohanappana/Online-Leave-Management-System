@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import addteacher from '../assets/hodpage/addt.png'
 import data from '../assets/hodpage/data-analysis.png'
 import study from '../assets/hodpage/study.png'
-import { Outlet, useNavigate } from 'react-router-dom'
+import google from '../assets/hodpage/google-docs.png';
+import { useNavigate } from 'react-router-dom'
 const Hodpage = () => {
   const navigate = useNavigate();
   useEffect(() =>{
@@ -49,10 +50,18 @@ const Hodpage = () => {
           </div>
           <div className='bg-lightgray w-60 rounded-3xl overflow-hidden shadow-lg mt-4 px-8'>
             <div className='flex justify-center items-center' >
+              <img className='w-24 h-auto mt-6' src={google} alt={addteacher} /> 
+            </div>
+            <div className='text-center mt-10 mb-1'>
+              <button className='border bg-green-500 text-white border-black text-xl px-2 py-2 mb-4' onClick={() => handleNavigation('/hodDashboard/applications')}>Applications</button>
+            </div> 
+          </div>
+          <div className='bg-lightgray w-60 rounded-3xl overflow-hidden shadow-lg mt-4 px-8'>
+            <div className='flex justify-center items-center' >
               <img className='w-24 h-auto mt-6' src={data} alt={addteacher} /> 
             </div>
             <div className='text-center mt-10 mb-1'>
-              <button className='border bg-green-500 text-white border-black text-xl px-2 py-2 mb-4'>View Dashboard</button>
+              <button className='border bg-green-500 text-white border-black text-xl px-2 py-2 mb-4' onClick={() => handleNavigation('/hodDashboard/viewDashboard')}>View Dashboard</button>
             </div> 
           </div>
         </div>

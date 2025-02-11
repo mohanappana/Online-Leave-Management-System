@@ -8,7 +8,7 @@ const DoughnutChart = ({ leaveData }) => {
         datasets: [
             {
                 label: 'Leave Distribution',
-                data: leaveData, // Array of numbers: [approved, pending, rejected]
+                data: [1,3,2], // Array of numbers: [approved, pending, rejected]
                 backgroundColor: ['#FFA500', '#d3d3d3' ], // Colors for each section
                 hoverBackgroundColor: ['#FFA600', '#ffffff'], // Colors on hover
             },
