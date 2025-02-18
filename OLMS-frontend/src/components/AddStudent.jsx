@@ -7,14 +7,16 @@ import * as Yup from 'yup';
 import { useRecoilValue } from 'recoil';
 import { userState } from './atom';
 import axiosInstance from './axiosInstance';
+import CustomSnackbar from './CustomSnackbar';
 
 const AddStudent = ({left,center,right}) => {
-  
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const userId = useRecoilValue(userState);
     const onSubmit = async (values,{resetForm}) =>{
       const { agreeTerms, ...submitValues } = values;
         try{
           const response = await axiosInstance.post("http://localhost:8080/api/student/student",submitValues)
+          setSnackbarOpen(true);
           resetForm();
           return response.data
         }catch(error){
@@ -112,6 +114,13 @@ const AddStudent = ({left,center,right}) => {
 
       </Formik>
       </div>
+      <CustomSnackbar
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        autoHideDuration={1000}
+        message="Leave Applied Successfully!"
+        severity="success"
+      />
     </div>
   )
 }
