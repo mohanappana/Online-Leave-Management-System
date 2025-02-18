@@ -67,7 +67,7 @@ public class LeaveController {
     public ResponseEntity<List<LeaveDTO>> getAllLeaveDetails(){
         List<LeaveDTO> leaveDTOS = leaveService.getAllLeaveDetails()
                 .stream()
-                .filter(leave -> leave.getLeaveStatus().equalsIgnoreCase("pending"))
+                //.filter(leave -> leave.getLeaveStatus().equalsIgnoreCase("pending"))
                 .map(leave -> new LeaveDTO(
                         leave.getLeaveId(),
                         leave.getStudentId(),
@@ -99,6 +99,8 @@ public class LeaveController {
             LeaveEntity leave = leaveEntity.get();
             String leaveStatus = requestBody.get("leaveStatus");
             leave.setLeaveStatus(leaveStatus);
+            String grantOrReject = requestBody.get("userId");
+            leave.setGrantedOrRejectedBy(grantOrReject);
             leaveRepository.save(leave);
             return new ResponseEntity<>("Leave status updated",HttpStatus.OK);
         }

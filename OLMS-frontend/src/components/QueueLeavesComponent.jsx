@@ -22,7 +22,7 @@ const QueueLeavesComponent = () => {
     })
   return (
     <div className='w-[192px] flex justify-center '>
-      <p className='text-6xl text-[#37be46]'>{queueLeavesCount}</p>
+      <p className='text-8xl mt-8  text-[#37be46]'>{queueLeavesCount}</p>
     </div>
   )
 }

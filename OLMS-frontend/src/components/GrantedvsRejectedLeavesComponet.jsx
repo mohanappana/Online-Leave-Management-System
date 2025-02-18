@@ -14,7 +14,7 @@ const GrantedvsRejectedLeavesComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get(`/leave/rejectandapproved/N180252`);
+      const response = await axiosInstance.get(`/leave/rejectandapproved/${userId}`);
       setLeaveDetails({
         approved: response.data.approved,
         rejected: response.data.rejected,
@@ -26,6 +26,7 @@ const GrantedvsRejectedLeavesComponent = () => {
           ? Math.trunc((response.data.approved / (response.data.rejected + response.data.approved)) * 100)
           : 0,
       };
+      console.log(latestValues);
     };
     fetchData();
   }, [userId]);
@@ -35,7 +36,7 @@ const GrantedvsRejectedLeavesComponent = () => {
     datasets: [
       {
         data: [leaveDetails.approved || 0, leaveDetails.rejected || 0],
-        backgroundColor: ['#37be46', '#9ca3af'],
+        backgroundColor: ['#37be46', '#fa0606'],
         borderColor: ['#37be46', '#9ca3af'],
         borderWidth: 1,
       },
@@ -79,7 +80,7 @@ const GrantedvsRejectedLeavesComponent = () => {
   ];
 
   return (
-    <div className='w-[140px]'>
+    <div className='w-[140px] mt-8'>
       <Doughnut data={data} options={options} plugins={plugins} />
     </div>
   );

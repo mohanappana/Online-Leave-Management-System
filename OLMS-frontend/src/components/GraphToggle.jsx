@@ -14,6 +14,7 @@ import axiosInstance from "./axiosInstance";
 import { useRecoilValue } from "recoil";
 import { userState } from "./atom";
 import StudentDashboardCards from "./StudentDashboardCards";
+import dataImage from '../assets/hodpage/data-analysis.png'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, Tooltip, PointElement, Legend);
 
@@ -37,22 +38,24 @@ const GraphToggle = () => {
 
   // Log the extracted values for debugging
   console.log(Object.keys(graphLabels), Object.values(graphLabels));
-
+  const currentMonth = new Date().getMonth();
+  const filteredValues = Object.values(graphLabels).slice(0, currentMonth + 1); 
+console.log(filteredValues,"filter");
   // Prepare the chart data
   const data = {
-    labels: month, // Use keys as labels
+    labels: Object.keys(graphLabels), 
     datasets: [
       {
         label: "Bar Graph",
         type: "bar",
-        data: Object.values(graphLabels), // Use values for bar graph
+        data: filteredValues, // Use values for bar graph
         backgroundColor: "rgba(255, 99, 132, 0.5)", // Bar color
         stack: "combined",
       },
       {
         label: "Line Graph",
         type: "line",
-        data: Object.values(graphLabels), // Example line data
+        data: filteredValues, // Example line data
         borderColor: "rgba(54, 162, 235, 1)", // Line color
         backgroundColor: "rgba(54, 162, 235, 0.5)", // Fill color
         fill: false,
@@ -81,18 +84,39 @@ const GraphToggle = () => {
       y: {
         stacked: true, // Stack bars and line
         beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+          min: 0,
+          max: 3,
+          callback: function (value) {
+            return value;
+          },
+        },
+        suggestedMax: 3,
       },
     },
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-6">Leaves Graph</h1>
-      <div className="bg-white shadow-lg rounded-lg p-4">
-        <Chart type="bar" data={data} options={options} />
+    <div className="grid grid-flow-row mb-20">
+
+      <div className='bg-gradient-to-r from-studentleft via-studentcenter to-studentright flex flex-row relative min-h-44'>
+        <div className='flex absolute top-7 left-14 sm:left-20  justify-center items-center'>
+            <img className='w-24 h-auto mt-6' src={dataImage} alt="study" />
+          </div>
+        <div className=' ml-3 absolute top-20 left-36 sm:left-44  font-bold text-4xl '>Dashboard</div>
       </div>
       <div>
-        <StudentDashboardCards/>
+
+          <div className="container mt-5 lg:mx-auto sm:p-4">
+          <h1 className="text-2xl font-bold text-center mb-6">Leaves Graph</h1>
+          <div className="bg-white shadow-lg rounded-lg p-4 max-w-5xl w-full mx-auto">
+            <Chart type="bar" data={data} options={options} />
+          </div>
+          <div>
+            <StudentDashboardCards/>
+          </div>
+        </div>
       </div>
     </div>
   );

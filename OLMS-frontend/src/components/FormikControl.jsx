@@ -52,6 +52,7 @@ const FormikControl = ({
   classNam,
   rightIcon,
   fieldcls,
+  userid,
   ...rest
 }) => {
   const { setFieldValue } = useFormikContext();
@@ -63,7 +64,7 @@ const FormikControl = ({
           <fieldset
             className={`${fieldcls} border-2 border-black max-w-xs rounded-3xl px-1 py-1`}
           >
-            <legend className="px-1 text-black text-sm">{name}</legend>
+            <legend className="px-1 text-black text-sm">{userid}</legend>
             <div className="relative">
               <Field
                 type="input"
@@ -90,20 +91,18 @@ const FormikControl = ({
 
     case 'checkbox':
       return (
-        <div className="mb-2 text-sm">
-          <label htmlFor={name}>
-            <div className="flex items-center gap-1">
-              <Field
-                type="checkbox"
-                id={name}
-                name={name}
-                className={`${classNam} size-3 ml-2`}
-                {...rest}
-              />
-              {rest.label}
-            </div>
-          </label>
-        </div>
+      <div className="flex justify-center gap-1">
+        <Field
+          type="checkbox"
+          id={name}
+          name={name}
+          className={`${classNam} w-4 h-4 accent-blue-500 cursor-pointer rounded mt-1 focus:ring focus:ring-blue-300`}
+          {...rest}
+        />
+        <label htmlFor={name} className='flex items-center gap-2'>
+          {rest.label}
+        </label>
+      </div>           
       );
 
     case 'textarea':

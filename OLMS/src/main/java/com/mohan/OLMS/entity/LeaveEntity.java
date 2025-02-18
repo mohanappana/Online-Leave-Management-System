@@ -24,7 +24,6 @@ public class LeaveEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "student", referencedColumnName = "StudentId")
-
     @JsonBackReference
     private StudentEntity student;
 
