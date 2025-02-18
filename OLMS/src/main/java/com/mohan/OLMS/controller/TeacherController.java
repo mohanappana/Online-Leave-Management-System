@@ -44,7 +44,7 @@ public class TeacherController {
             Map<String,Object> profile = teacherService.getTeacherProfile(username);
             return ResponseEntity.ok(profile);
         }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Student not authenticated");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Teacher not authenticated");
 
     }
     @GetMapping("/teacher")

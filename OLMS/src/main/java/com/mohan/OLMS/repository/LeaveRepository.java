@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Map;
 
@@ -15,22 +16,43 @@ public interface LeaveRepository extends JpaRepository<LeaveEntity,Long> {
     List<LeaveEntity> findByStudentId(@Param("studentId") String studentId);
 
     // Count leaves by student and month
-    @Query("SELECT COUNT(l) FROM LeaveEntity l WHERE l.student.studentId = :studentId AND FUNCTION('MONTH', l.fromDate) = :month AND FUNCTION('YEAR', l.fromDate) = :year")
-    int countLeavesByMonth(
+    @Query("SELECT COUNT(l) FROM LeaveEntity l WHERE l.student.studentId = :studentId AND FUNCTION('MONTH', l.fromDate) = :month AND FUNCTION('YEAR', l.fromDate) = :year AND l.leaveStatus = :leaveStatus")
+    Integer countLeavesByMonthAndStatus(
             @Param("studentId") String studentId,
             @Param("month") int month,
-            @Param("year") int year
+            @Param("year") int year,
+            @Param("leaveStatus") String leaveStatus
     );
 
-    // Get leave data grouped by month for graphing
-    @Query("SELECT FUNCTION('MONTH', l.fromDate) AS month, COUNT(l) AS count FROM LeaveEntity l WHERE l.student.studentId = :studentId GROUP BY FUNCTION('MONTH', l.fromDate)")
-    List<Object[]> countLeavesGroupedByMonth(@Param("studentId") String studentId);
+
+    @Query(value = """
+    SELECT ELT(m.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') AS month_name, 
+           COALESCE(COUNT(l.leave_id), 0) AS count
+    FROM (SELECT 1 AS month UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 
+          UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 
+          UNION SELECT 11 UNION SELECT 12) AS m
+    LEFT JOIN leave_entity l 
+        ON MONTH(l.from_date) = m.month 
+        AND l.student = :studentId 
+        AND l.leave_status = 'APPROVED' 
+        AND YEAR(l.from_date) = :year
+        AND (MONTH(l.from_date) <= MONTH(CURRENT_DATE) AND YEAR(l.from_date) = :year)
+    GROUP BY m.month
+    ORDER BY m.month
+""", nativeQuery = true)
+    List<Object[]> countLeavesGroupedByMonth(@Param("studentId") String studentId, @Param("year") Year year);
+
+
 
     @Query("SELECT COUNT(l) FROM LeaveEntity l " +
             "WHERE (MONTH(l.fromDate) = MONTH(CURRENT_DATE) " +
             "OR MONTH(l.toDate) = MONTH(CURRENT_DATE)) " +
-            "AND YEAR(l.fromDate) = YEAR(CURRENT_DATE)")
-    Integer countLeavesForCurrentMonth();
+            "AND YEAR(l.fromDate) = YEAR(CURRENT_DATE) " +
+            "AND l.leaveStatus = 'Approved'"+
+            "AND l.student.studentId = :studentId"
+    )
+    Integer countLeavesForCurrentMonth(@Param("studentId") String studentId);
+
 
 //    @Transactional
 //    @Query("DELETE FROM LeaveEntity l WHERE l.student.studentId = :studentId")

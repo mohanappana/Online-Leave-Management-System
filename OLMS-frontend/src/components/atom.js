@@ -1,27 +1,34 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
+// Check if Remember Me is enabled in localStorage
+const rememberMe = localStorage.getItem("rememberMe") === "true";
+
+// Use localStorage only if Remember Me is checked, otherwise use sessionStorage
 const { persistAtom } = recoilPersist({
-    key: "recoil-persist", // Unique key for localStorage
-    storage: localStorage, // Choose localStorage or sessionStorage
-  });
+  key: "recoil-persist",
+  storage: rememberMe ? localStorage : sessionStorage,
+});
 
-export const roleState =atom({
-    key:"roleState",
-    default: '',
-    effects:[persistAtom],
-})
+// Atom to track if the user wants to store data in the future
+export const storeInFutureAtom = atom({
+  key: "storeInFutureAtom",
+  default: rememberMe, // Set default based on Remember Me
+});
+
+export const roleState = atom({
+  key: "roleState",
+  default: '',
+  effects: [persistAtom],
+});
+
 export const userState = atom({
-    key:"userState",
-    default: '',
-    effects:[persistAtom],
-})
+  key: "userState",
+  default: '',
+  effects: [persistAtom],
+});
 
-// export const rolesRoutes = atom({
-//     key:"rolesRoutes",
-//     default:{
-//         "STUDENT":"/studentDashboard",
-//         "TEACHER":"/teacherDashboard",
-//         "HOD":"/hodDashboard",
-//     },
-// })
+export const profileState = atom({
+  key: "profileState",
+  default: false,
+});

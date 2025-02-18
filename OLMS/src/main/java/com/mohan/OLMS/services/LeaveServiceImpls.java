@@ -9,12 +9,11 @@ import com.mohan.OLMS.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.Month;
+import java.time.Year;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +55,7 @@ public class LeaveServiceImpls implements LeaveService{
         int year = leaveEntity.getFromDate().getYear();
 
         // Check if the student has already applied for the maximum allowed leaves
-        int leaveCount = leaveRepository.countLeavesByMonth(student.getStudentId(), month, year);
+        int leaveCount = leaveRepository.countLeavesByMonthAndStatus(student.getStudentId(), month, year,"Approved");
         if (leaveCount >= 3) {
             throw new IllegalArgumentException("Maximum 3 leaves are allowed per month.");
         }
@@ -88,28 +87,46 @@ public class LeaveServiceImpls implements LeaveService{
 
     @Override
     public Map<String, Integer> getLeaveDataforGraph(String studentId) {
-        List<Object[]> results = leaveRepository.countLeavesGroupedByMonth(studentId);
+        Year year = Year.now();
+
+        List<Object[]> results = leaveRepository.countLeavesGroupedByMonth(studentId, year);
 
         // Map to store month names and counts
-        Map<String, Integer> leaveCountsByMonth = new HashMap<>();
+        Map<String, Integer> leaveCountsByMonth = new LinkedHashMap<>();
 
+        // Define the months in chronological order
+        List<String> months = Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+
+        int currentMonth = LocalDate.now().getMonthValue(); // January = 1, February = 2, ..., December = 12
+
+        // Initialize the map with all months set to 0, but up to the current month
+        for (int i = 0; i < currentMonth; i++) {
+            leaveCountsByMonth.put(months.get(i), 0); // Set previous months to 0
+        }
+
+        // Populate the map with the actual leave counts from the query results
         for (Object[] row : results) {
-            Integer monthNumber = (Integer) row[0]; // Extract numeric month
+            String month = (String) row[0];
             Long longCount = (Long) row[1]; // Extract leave count
-
             Integer count = longCount.intValue();
 
-            // Convert numeric month to month name (e.g., 1 -> "Jan")
-            String monthName = Month.of(monthNumber).name().substring(0, 3).toUpperCase(); // Example: "JAN"
-            leaveCountsByMonth.put(monthName, count);
+            // Update the map with the correct count for the month
+            leaveCountsByMonth.put(month, count);
         }
+
+        // Optionally, print the map to check the output
+        for (Map.Entry<String, Integer> entry : leaveCountsByMonth.entrySet()) {
+            System.out.println("Month: " + entry.getKey() + " count: " + entry.getValue());
+        }
+
         return leaveCountsByMonth;
     }
+
 
     @Override
     public Integer getDataforDoughnutChart(String studentId) {
 
-        return leaveRepository.countLeavesForCurrentMonth();
+        return leaveRepository.countLeavesForCurrentMonth(studentId);
     }
 
     @Override

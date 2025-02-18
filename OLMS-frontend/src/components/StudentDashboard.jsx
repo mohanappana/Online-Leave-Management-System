@@ -8,7 +8,7 @@ import { userState } from './atom';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const StudentDashboard = ({color,width}) => {
+const StudentDashboard = ({total,width,avaliable}) => {
   const [chartData, setChartData] = useState(undefined); // Default undefined
   const studentId = useRecoilValue(userState);
 
@@ -34,8 +34,8 @@ const StudentDashboard = ({color,width}) => {
     datasets: [
       {
         data: [chartData || 0, 3 - (chartData || 0)],
-        backgroundColor: [`#${color}`, "#9ca3af"],
-        borderColor: [`#${color}`, "#9ca3af"],
+        backgroundColor: [`#${total}`, `#${avaliable}`],
+        borderColor: [`#${total}`, `#${avaliable}`],
         borderWidth: 1,
       },
     ],

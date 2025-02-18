@@ -4,6 +4,7 @@ import LoginPage from './LoginPage';
 import { useRecoilValue } from 'recoil';
 import { roleState } from './atom';
 import { useNavigate } from 'react-router-dom';
+import FeaturesComonent from './FeaturesComonent';
 
 const Hom = () => {
   const [showModal, setShowModal] = useState(false);
@@ -38,38 +39,46 @@ const Hom = () => {
     return <div>Loading...</div>; // Placeholder while loading
   }
   return (
-    <div className="font-sans">
+    <div className="font-sans bg-[#f6f9f9]">
       <div className="grid grid-rows-1 sm:grid-cols-2 gap-4 mb-10">
-        <div className='mt-36 sm:col-span-1'>
-          <div className="mt-10 ml-20 relative">
+        <div className='mt-16 sm:mt-28 sm:col-span-1'>
+          <div className="sm:mt-9 ml-10 sm:ml-20 relative">
             <div className="absolute md:left-24">
               <div>
                 {features.map(({ title, description }, index) => (
-                  <div key={index} className="flex flex-row text-center mt-3">
-                    <h1 className="text-darkblue font-medium text-5xl mb-2">{title}</h1>
-                    <p className="text-xl text-nowrap sm:pl-2 sm:py-2 pl-4 py-4 text-gray-700">{description}</p>
+                  <div key={index} className="flex flex-row items-end text-center">
+                    <h1 className="text-darkblue font-medium  text-[46px] sm:leading-sung ">{title}</h1>
+                    <p className=" text-[20px] text-nowrap sm:pl-2 sm:py-2 pl-4 mb-[10px] sm:mb-[3px] text-gray-700">{description}</p>
                   </div>
                 ))}
               </div>
               <button
                 onClick={openModal} 
-                className="border-2 text-xl rounded-full bg-blue-600 text-white border-black px-4 py-2 mt-10"
+                className="border text-xl rounded-full hover:bg-gradient-to-r hover:from-[#0097b2] hover:to-[#7ed957] bg-white text-black hover:text-white border-black px-4 py-2 mt-5"
               >
                 <span className="text-nowrap">Get started</span>
               </button>
             </div>
           </div>
         </div>
-        <div className="mt-10 sm:col-span-1 ">
+        <div className="mt-56 p-3 sm:mt-10 sm:col-span-1 ">
           <img
-            className="justify-center items-center md:w-full"
+            className="flex justify-center mt-16 sm:ml-20 items-center md:max-w-[460px]"
             src={fig1}
             alt="Leave Management Illustration"
           />
         </div>
       </div>
 
-    {/* modal will conditionally render */}
+      <div className='mt-20 '>
+        <div>
+          <p className='font-bold text-[46px] text-center text-darkblue'>Why <span className='text-[40px] text-[#37be46]'>OLMS?</span></p>
+        </div>
+        <div>
+
+        <FeaturesComonent/>
+        </div>
+      </div>
       
     {showModal && <LoginPage show={showModal} onRequestClose={closeModal} isOpen={showModal} />}
     

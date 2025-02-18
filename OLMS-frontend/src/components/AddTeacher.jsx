@@ -3,18 +3,22 @@ import addteacher from '../assets/hodpage/addt.png'
 import FormikControl from './FormikControl'
 import { Formik,Form } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import axiosInstance from './axiosInstance';
+import CustomSnackbar from './CustomSnackbar';
 const AddTeacher = () => {
-  const onSubmit = async (values) =>{
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const onSubmit = async (values,{resetForm}) =>{
+    const { agreeTerms, ...submitValues } = values;
     try{
-      const response = await axiosInstance.post("http://localhost:8080/api/teacher/teacher",values)
+      const response = await axiosInstance.post("http://localhost:8080/api/teacher/teacher",submitValues);
+      setSnackbarOpen(true);
+      resetForm();
       return response.data
     }catch(error){
       console.error("e",error)
     }
   }
-  const [hello, sethello] = useState(false)
+  
   return (
     <div>
       <div className='bg-gradient-to-r from-hodleft via-hodcenter to-hodright min-h-44 flex flex-nowrap relative '>
@@ -33,6 +37,8 @@ const AddTeacher = () => {
             teacherName:"",
             teacherPhone:"",
             teacherEmail:"",
+            teacherAddedBy:"",
+            agreeTerms:false,
             
         }
       }
@@ -46,13 +52,17 @@ const AddTeacher = () => {
                 .max(15,"Teacher Name atmost 5 characters")
                 .required("Teacher Name is Required"),
             teacherPhone:Yup.string().required("Teacher phone no. is required"),
-            teacherEmail:Yup.string().required("Teacher mail id")
+            teacherEmail:Yup.string().required("Teacher mail id"),
+            agreeTerms: Yup.bool().oneOf(
+              [true],
+              'You must confirm your consent to proceed'
+            ),
         })
       }
       onSubmit={onSubmit}>
         <div className='flex justify-center relative'>
 
-          <div className='min-w-xl px-64 py-20'>
+          <div className='min-w-lg px-64 py-20'>
               <Form className='bg-inputback shadow-md rounded-3xl px-8 pt-6 pb-8 mb-4  relative'>
                 <div className='grid grid-flow-row  auto-rows-auto'>
                   <FormikControl control="textfield" label="Teacher Id" name="teacherId" classNam="w-52 bg-login placeholder-black " type="text" placeholder="Teacher ID" fieldcls="bg-login" />
@@ -65,8 +75,8 @@ const AddTeacher = () => {
                   <FormikControl control="textfield" label="Teacher Teacher Phone" name="teacherPhone" classNam="w-52 bg-login placeholder-black" type="text" placeholder="Teacher Phone Number" fieldcls="bg-login"/> 
                   
                 </div>
-                <div className='relative'>
-                    <div className='mb-7' >
+                <div>
+                    <div className='my-4' >
                     <FormikControl
                       control="checkbox"
                       name="agreeTerms"
@@ -75,7 +85,7 @@ const AddTeacher = () => {
                     />              
                       
                     </div>
-                    <div className=' absolute -bottom-11 right-0'>
+                    <div className='flex justify-center'>
                       
 
                       <button type="submit" className='bg-green-500 border-b border rounded-md  text-white px-3 py-1 '>
@@ -91,6 +101,13 @@ const AddTeacher = () => {
 
       </Formik>
       </div>
+      <CustomSnackbar
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        autoHideDuration={1000}
+        message="Leave Applied Successfully!"
+        severity="success"
+      />
     </div>
   )
 }
