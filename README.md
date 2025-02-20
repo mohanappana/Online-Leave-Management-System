@@ -4,6 +4,7 @@
 OLMS is an online leave application platform for students with user authentication, student and faculty portals, leave status dashboard.
 
 ## Directory Structure
+```
 📂 Report_Generation
 ├── reports
     └── 📄 report_16-02-2025
@@ -13,20 +14,21 @@ OLMS is an online leave application platform for students with user authenticati
     └── 📄 cbt_cms_stage_data_collection_words.csv
 ├── 📝 report_generation.py 
 ├── 📄 requirements.txt 
+```
 
 ## Technologies Used
-- <b> Frontend: </b> HTML, CSS, Bootstrap, JavaScript(JQuery)
-- <b> Backend: </b> Python Flask server
-- <b> Database: </b> MySQL relational database
+<b> Frontend: </b> HTML, CSS, Bootstrap, JavaScript(JQuery) </br>
+<b> Backend: </b> Python Flask server </br>
+<b> Database: </b> MySQL relational database </br>
 
-## Features:
-<b> 1. Efficient: </b> 
-<b> 2. No Paperwork: </b> 
-<b> 3. Accessible: </b> 
-<b> 4. 3-Tier Portal: </b>  HoD, Faculty, Student
-<b> 5. Secure: </b> 
-<b> 6. Compatible across platforms: </b> 
-<b> 7. Insightful Dashboards: </b> 
+## Features
+<b> 1. Efficient: </b>Developed using ReactJS and MySQL, ensuring high performance and scalability. 
+<b> 2. No Paperwork: </b>Eliminates manual paperwork for leave applications, approvals, and tracking. 
+<b> 3. Accessible: </b>Accessible to all users across devices with a responsive design.
+<b> 4. 3-Tier Portal: </b>Designed for HoDs, faculty, and students, tailored for educational institutions.
+<b> 5. Secure: </b>Secured with JWT authentication and Spring Security for safe transactions.
+<b> 6. Cross-Platform Compatibility: </b>Fully responsive web application, compatible across all platforms. 
+<b> 7. Insightful Dashboards: </b>Interactive dashboards powered by Chart.js for intuitive analytics. 
 
 ## Getting started
 
@@ -44,4 +46,4 @@ Mohan
 ## Acknowledgements
 Boddu Sri Pavan
 
-Thank you !
+## Thank you !
