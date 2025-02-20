@@ -1,7 +1,7 @@
-# Name of the Project
+# <font color="blue">OLMS</font>-<font color="blue"> O</font>nline <font color="blue">L</font>eave <font color="blue">M</font>anagement <font color="blue">S</font>ystem
 <<< Product Demo Video goes here wiht full screen width >>>
 
-OLMS is an online leave application platform for students with user authentication, student and faculty portals, leave status dashboard.
+##### Paperless, Efficient, Secure leave management across educational institutions
 
 ## Directory Structure
 ```
