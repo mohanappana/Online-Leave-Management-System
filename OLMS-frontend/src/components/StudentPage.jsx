@@ -65,7 +65,7 @@ const StudentPage = () => {
 
         <div className="mt-6 flex flex-wrap justify-center sm:justify-around gap-7">
           {/* Apply Card */}
-          <div className="bg-lightgray w-60 sm:w-80 rounded-3xl shadow-lg px-4 sm:px-8 py-6">
+          <div className="bg-lightgray w-60 sm:w-70 rounded-3xl shadow-lg px-4 sm:px-8 py-6">
             <div className="flex justify-center items-center">
               <img className="w-24 h-auto mt-4" src={accept} alt="study" />
             </div>
@@ -80,13 +80,13 @@ const StudentPage = () => {
           </div>
 
           {/* Applications Card */}
-          <div className="bg-lightgray w-60 sm:w-80 rounded-3xl shadow-lg px-4 sm:px-8 py-6">
+          <div className="bg-lightgray w-60 sm:w-70  rounded-3xl shadow-lg px-4 sm:px-8 py-6">
             <div className="flex justify-center items-center">
               <img className="w-24 h-auto mt-4" src={app} alt="study" />
             </div>
             <div className="text-center mt-6">
               <button
-                className="border-2 bg-lightgray hover:bg-byellow hover:text-white rounded-lg border-black text-lg sm:text-xl px-6 py-2 mb-2"
+                className="border-2 bg-lightgray hover:bg-byellow hover:text-white rounded-lg border-black text-lg sm:text-xl px-3 py-2 mb-2"
                 onClick={() => handleNavigation("/studentDashboard/applications")}
               >
                 Applications
@@ -95,13 +95,13 @@ const StudentPage = () => {
           </div>
 
           {/* View Dashboard Card */}
-          <div className="bg-lightgray w-60 sm:w-80 rounded-3xl shadow-lg px-4 sm:px-8 py-6">
+          <div className="bg-lightgray w-60  rounded-3xl shadow-lg px-4 sm:px-8 py-6">
             <div className="flex justify-center items-center">
               <img className="w-24 h-auto mt-4" src={data} alt="study" />
             </div>
             <div className="text-center mt-6">
               <button
-                className="border-2 bg-lightgray hover:bg-byellow hover:text-white rounded-lg border-black text-lg sm:text-xl px-6 py-2 mb-2"
+                className="border-2 bg-lightgray hover:bg-byellow hover:text-white rounded-lg border-black text-lg sm:text-xl px-3 py-2 mb-2"
                 onClick={() => handleNavigation("/studentDashboard/details")}
               >
                 View Dashboard

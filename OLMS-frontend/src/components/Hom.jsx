@@ -47,8 +47,8 @@ const Hom = () => {
               <div>
                 {features.map(({ title, description }, index) => (
                   <div key={index} className="flex flex-row items-end text-center">
-                    <h1 className="text-darkblue font-medium  text-[46px] sm:leading-sung ">{title}</h1>
-                    <p className=" text-[20px] text-nowrap sm:pl-2 sm:py-2 pl-4 mb-[10px] sm:mb-[3px] text-gray-700">{description}</p>
+                    <h1 className="text-darkblue font-medium  text-[50px] sm:leading-sung ">{title}</h1>
+                    <p className=" text-[25px] text-nowrap sm:pl-2 sm:py-2 pl-4 mb-[11px] sm:mb-[3px] text-gray-700">{description}</p>
                   </div>
                 ))}
               </div>
@@ -63,7 +63,7 @@ const Hom = () => {
         </div>
         <div className="mt-56 p-3 sm:mt-10 sm:col-span-1 ">
           <img
-            className="flex justify-center mt-16 sm:ml-20 items-center md:max-w-[460px]"
+            className="flex justify-center mt-16 sm:ml-20 items-center md:max-w-[500px]"
             src={fig1}
             alt="Leave Management Illustration"
           />

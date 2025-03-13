@@ -2,7 +2,7 @@ import React from 'react'
 import email from '../assets/email.png'
 const Footer = () => {
   return (
-    <div className='mt-10'>
+    <div className=''>
 
       <footer className='bg-[#000931] text-white text-center flex flex-col items-center h-56 relative'>
 

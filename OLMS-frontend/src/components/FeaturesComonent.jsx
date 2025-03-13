@@ -27,7 +27,7 @@ const FeaturesComonent = () => {
 
       <FeatureCard features={features}/>
       </div>
-      <div className='mb-20'>
+      <div className='pb-20'>
 
       <FeatureCard features={features2}/>
       </div>
