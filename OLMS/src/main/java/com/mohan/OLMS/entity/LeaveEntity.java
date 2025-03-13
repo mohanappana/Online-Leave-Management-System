@@ -23,7 +23,7 @@ public class LeaveEntity {
     private Long leaveId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "student", referencedColumnName = "StudentId")
+    @JoinColumn(name = "student", referencedColumnName = "studentId")
     @JsonBackReference
     private StudentEntity student;
 
