@@ -30,6 +30,10 @@ public class AuthController {
     @Autowired
     private JwtUtils jwtUtil;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication;
