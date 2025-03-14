@@ -56,6 +56,7 @@ public class SecurityConfig {
                 //.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .httpBasic(Customizer.withDefaults())
+                .authenticationProvider(authenticationProvider()) 
                 .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
