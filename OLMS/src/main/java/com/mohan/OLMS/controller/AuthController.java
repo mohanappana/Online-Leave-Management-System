@@ -30,7 +30,7 @@ public class AuthController {
     @Autowired
     private JwtUtils jwtUtil;
 
-    @GetMapping("/hello")
+    @GetMapping("/")
     public String hello(){
         return "hello";
     }
