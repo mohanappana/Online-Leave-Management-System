@@ -17,7 +17,7 @@ const StudentApplicationStatus = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await axiosInstance.get(`http://localhost:8080/leave/student/${studentId}`);
+        const response = await axiosInstance.get(`/leave/student/${studentId}`);
         setApplicationDetails(response.data);
       } catch (error) {
         console.error("Error fetching applications:", error);
