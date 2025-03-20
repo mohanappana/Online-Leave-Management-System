@@ -10,7 +10,7 @@ const AddTeacher = () => {
   const onSubmit = async (values,{resetForm}) =>{
     const { agreeTerms, ...submitValues } = values;
     try{
-      const response = await axiosInstance.post("http://localhost:8080/api/teacher/teacher",submitValues);
+      const response = await axiosInstance.post("/api/teacher/teacher",submitValues);
       setSnackbarOpen(true);
       resetForm();
       return response.data
