@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { roleState, storeInFutureAtom, userState } from "./atom";
 import { recoilPersist } from "recoil-persist";
-
+import axiosInstance from './axiosInstance';
 Modal.setAppElement("#root");
 
 const LoginPage = ({ isOpen, onRequestClose }) => {
