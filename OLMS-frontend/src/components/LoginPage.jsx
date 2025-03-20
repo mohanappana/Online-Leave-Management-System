@@ -23,7 +23,7 @@ const LoginPage = ({ isOpen, onRequestClose }) => {
 
   const onSubmit = async (values) => {
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", {
+      const response = await axiosInstance.post("/auth/login", {
         username: values.studentId,
         password: values.studentPassword,
       });
