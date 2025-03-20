@@ -15,7 +15,7 @@ const AddStudent = ({left,center,right}) => {
     const onSubmit = async (values,{resetForm}) =>{
       const { agreeTerms, ...submitValues } = values;
         try{
-          const response = await axiosInstance.post("http://localhost:8080/api/student/student",submitValues)
+          const response = await axiosInstance.post("/api/student/student",submitValues)
           setSnackbarOpen(true);
           resetForm();
           return response.data
