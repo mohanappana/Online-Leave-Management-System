@@ -118,7 +118,7 @@ const AddStudent = ({left,center,right}) => {
         open={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}
         autoHideDuration={1000}
-        message="Leave Applied Successfully!"
+        message="Student Added Successfully!"
         severity="success"
       />
     </div>
