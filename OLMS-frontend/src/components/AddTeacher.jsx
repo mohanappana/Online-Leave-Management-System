@@ -105,7 +105,7 @@ const AddTeacher = () => {
         open={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}
         autoHideDuration={1000}
-        message="Leave Applied Successfully!"
+        message="Teacher Added Successfully!"
         severity="success"
       />
     </div>
