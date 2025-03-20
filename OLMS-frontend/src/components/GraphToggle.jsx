@@ -26,7 +26,7 @@ const GraphToggle = () => {
   useEffect(() => {
     const fetchGraphData = async () => {
       try {
-        const response = await axiosInstance.get(`http://localhost:8080/leave/graph/${studentId}`);
+        const response = await axiosInstance.get(`leave/graph/${studentId}`);
         console.log(response.data);
         setGraphLabels(response.data);
       } catch (error) {
