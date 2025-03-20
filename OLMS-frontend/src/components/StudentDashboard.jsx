@@ -15,7 +15,7 @@ const StudentDashboard = ({total,width,avaliable}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(`http://localhost:8080/leave/doughnut/${studentId}`);
+        const response = await axiosInstance.get(`/leave/doughnut/${studentId}`);
         console.log('API Response:', response.data);
         setChartData(response.data || 0); // Fallback to 0
       } catch (error) {
