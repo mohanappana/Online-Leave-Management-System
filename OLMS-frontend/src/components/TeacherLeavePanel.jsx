@@ -21,7 +21,7 @@ const TeacherLeavePanel = ({left,center,right}) => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-      const response = await axiosInstance.get('http://localhost:8080/leave/leaveDetails');
+      const response = await axiosInstance.get('/leave/leaveDetails');
       console.log("API Response:", response.data);
       
       
