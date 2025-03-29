@@ -14,7 +14,7 @@ const StudentDashboardCards = () => {
     <div>
       <div className=' flex flex-wrap justify-center sm:justify-evenly relative top-32 pb-20 gap-7'>
         <div className='bg-lightgray w-72 h-72 rounded-3xl overflow-hidden shadow-lg mt-4 flex flex-col items-center justify-center relative'>
-          <p className='text-center absolute top-6 font-medium text-xl'>Avaiable leaves in {month[currentMonth]}</p>
+          <p className='text-center absolute top-6 font-medium text-xl'>Avaiable leaves in {month[currentMonth - 1]}</p>
           <div className='mt-8'>
             <StudentDashboard total='a6a6a6' avaliable='37be46' width='w-[140px]'/>
 
