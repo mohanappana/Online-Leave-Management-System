@@ -6,6 +6,7 @@ import {
   BarElement,
   BarController,
   LineElement,
+  LineController,
   Tooltip,
   PointElement,
   Legend,
@@ -17,7 +18,7 @@ import { userState } from "./atom";
 import StudentDashboardCards from "./StudentDashboardCards";
 import dataImage from '../assets/hodpage/data-analysis.png'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, BarController, LineElement, Tooltip, PointElement, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, BarController, LineElement, LineController, Tooltip, PointElement, Legend);
 
 const GraphToggle = () => {
   const studentId = useRecoilValue(userState);
