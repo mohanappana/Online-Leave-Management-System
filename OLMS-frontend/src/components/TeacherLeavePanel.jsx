@@ -50,7 +50,7 @@ const TeacherLeavePanel = ({left,center,right}) => {
     const handleGrantApplication = async (id) => {
       try {
         const data = { leaveStatus: 'Approved',userId: userId };
-        const response = await axiosInstance.patch(`http://localhost:8080/leave/patch/${id}`, data);
+        const response = await axiosInstance.patch(`/leave/patch/${id}`, data);
         const updatedApplications = applications.map(app =>
           app.leaveId === id ? { ...app, leaveStatus: 'Approved' } : app
         );
@@ -64,7 +64,7 @@ const TeacherLeavePanel = ({left,center,right}) => {
     const handleRejectApplication = async (id) => {
       try {
         const data = { leaveStatus: 'Rejected',userId: userId };
-        const response = await axiosInstance.patch(`http://localhost:8080/leave/patch/${id}`, data);
+        const response = await axiosInstance.patch(`/leave/patch/${id}`, data);
         const updatedApplications = applications.map(app =>
           app.leaveId === id ? { ...app, leaveStatus: 'Rejected' } : app
         );
