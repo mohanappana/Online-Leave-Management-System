@@ -35,7 +35,7 @@ const StudentApplicationStatus = () => {
   const deleteApplication = async (id) => {
     setLoading(true);
     try {
-      await axiosInstance.delete(`http://localhost:8080/leave/delete/${id}`);
+      await axiosInstance.delete(`/leave/delete/${id}`);
       setApplicationDetails(prevDetails => prevDetails.filter(app => app.leaveId !== id));
     } catch (error) {
       console.error("Error deleting application:", error);
