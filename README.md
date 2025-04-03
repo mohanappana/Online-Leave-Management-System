@@ -1,6 +1,8 @@
 # Online Leave Management System (OLMS)
 
-//📽 **[Product Demo Video](#)** *([Embed or provide a link here](https://drive.google.com/file/d/17T9Ow1sjP7058_nmMdNgIK7YNv9RhdYI/view?usp=drive_link)) *
+📽 **[Product Demo Video](#)** 
+
+https://github.com/user-attachments/assets/336bd672-cc23-41b6-89d3-ba9e52230dbd
 
 OLMS is an online leave application platform designed for students, featuring **user authentication, student and faculty portals, and a leave status dashboard** for seamless leave management.
 
